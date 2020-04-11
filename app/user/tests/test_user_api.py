@@ -116,12 +116,12 @@ class PublicUserApiTests(TestCase):
 
 class PrivateUserApiTests(TestCase):
     """test api requests that require auth"""
-    
+
     def setUp(self):
         self.user = create_user(
             email='test@gmail.com',
-            password = 'testpass',
-            name = 'name',
+            password='testpass',
+            name='name',
         )
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
@@ -134,9 +134,9 @@ class PrivateUserApiTests(TestCase):
 
         self.assertEqual(res.data, {
             'name': self.user.name,
-            'email':self.user.email,
+            'email': self.user.email,
         })
-    
+
     def test_post_me_not_allowed(self):
         """test that post is not allowed on me url"""
         res = self.client.post(ME_URL, {})
@@ -156,4 +156,3 @@ class PrivateUserApiTests(TestCase):
         self.assertEqual(self.user.name, payload['name'])
         self.assertTrue(self.user.check_password(payload['password']))
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        
